@@ -95,11 +95,29 @@ app.get("/getCartDetails/:userId", (req, res) => {
     const userId = req.params.userId;
     UserModel.findById(userId)
         .then(user => {
-            res.json(user.cart); // Return the cart details
+            res.json(user.cart); 
         })
         .catch(error => {
             console.error("Error fetching cart details:", error);
             res.status(500).json({ error: "Failed to fetch cart details" });
+        });
+});
+
+app.get('/getGroceryItemsByName', (req, res) => {
+    const name = req.query.name;
+    const regexName = new RegExp(name, 'i'); // Case-insensitive regex
+    GroceryModel.find({ name: regexName })
+        .then(items => {
+            if (items.length > 0) {
+                res.json(items); // Return the found grocery items
+            } else {
+                console.log("No grocery items found with the provided name:", name);
+                res.status(404).json({ message: "No grocery items found with the provided name" });
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching grocery items by name:", error);
+            res.status(500).json({ error: "Failed to fetch grocery items by name" });
         });
 });
 
@@ -108,10 +126,9 @@ app.put("/updateCartItem/:userId/:itemId", (req, res) => {
     const userId = req.params.userId;
     const itemId = req.params.itemId;
     const { count, quantity, price } = req.body;
-    if (typeof count !== 'number' || typeof quantity !== 'number' || typeof price !== 'number') {
+    if (typeof(count) !== 'number' || typeof(quantity) !== 'number' || typeof(price) !== 'number') {
         return res.status(400).json({ error: "Invalid data format" });
     }
-
     UserModel.findOneAndUpdate(
         { _id: userId, "cart._id": itemId },
         {

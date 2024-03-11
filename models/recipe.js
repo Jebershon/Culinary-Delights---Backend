@@ -14,8 +14,6 @@ const RecipeSchema = new mongoose.Schema({
     prepTime: Number,
     cookTime: Number,
     totalTime: Number,
-    rating: Number,
-
 });
 const RecipeModel = mongoose.model("Recipe",RecipeSchema);
 module.exports = RecipeModel;
