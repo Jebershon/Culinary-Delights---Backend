@@ -12,7 +12,7 @@ app.use(express.json({limit: '20mb'}));
 app.use(express.urlencoded({ extended: false, limit: '20mb' }));
 
 app.use(cors({
-    origin:["http://localhost:3000"],
+    origin:["https://culinarydelights.vercel.app/"],
     methods:["GET","PUT","POST","DELETE"],
     credentials:true
 }));
