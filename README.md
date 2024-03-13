@@ -52,11 +52,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### Example
-![image](https://github.com/Jebershon/Culinary-Delights/assets/123262772/bb8eee3a-559d-4fc7-aaa8-df79a191f508)
-![image](https://github.com/Jebershon/Culinary-Delights/assets/123262772/277bcbf6-4bd6-424d-b6ae-032b0f25b0c0)
-![image](https://github.com/Jebershon/Culinary-Delights/assets/123262772/7994b3aa-288c-4774-8ad1-e2e4c84304be)
-
 # Setup
 To set up the project locally, follow these steps:
 
