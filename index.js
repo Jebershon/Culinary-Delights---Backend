@@ -57,7 +57,9 @@ app.get("/FindUser/:id", (req, res) => {
         .catch(err => res.json(err));
 });
 
-
+app.get("/Customer",(req,res)=>{
+    UserModel.find().then(user => {res.json(user)}).catch(err => res.json(err));
+})
 
 app.put("/UpdateUser/:id", (req, res) => {
     const id = req.params.id;
