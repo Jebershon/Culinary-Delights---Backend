@@ -38,15 +38,43 @@ app.post("/Login",(req,res)=>{
         }
     })
 })
-app.post("/CreateUser",(req,res)=>{
-    const {name, email, password, role}=req.body;
-    let profilePicture="pic-no";
-    bcrypt.hash(password,10).then(hash=>{
-        UserModel.create({name, email, password : hash, role,profilePicture})
-        .then(users => res.json({status:"ok"}))
-        .catch(err => res.json(err));
-    }).catch(err => res.json(err));
-})
+// app.post("/CreateUser",(req,res)=>{
+//     const {name, email, password, role}=req.body;
+//     let profilePicture="pic-no";
+//     bcrypt.hash(password,10).then(hash=>{
+//         UserModel.create({name, email, password : hash, role,profilePicture})
+//         .then(users => res.json({status:"ok"}))
+//         .catch(err => res.json(err));
+//     }).catch(err => res.json(err));
+// })
+
+app.post("/CreateUser", (req, res) => {
+    const { name, email, password, role } = req.body;
+
+    UserModel.findOne({ email })
+        .then(existingUser => {
+            if (existingUser) {
+                return res.status(400).json({ error: 'User already exists' });
+            }
+            return bcrypt.hash(password, 10);
+        })
+        .then(hashedPassword => {
+            return UserModel.create({
+                name,
+                email,
+                password: hashedPassword,
+                role,
+                profilePicture: "pic-no"
+            });
+        })
+        .then(newUser => {
+            res.json({ status: "ok" });
+        })
+        .catch(error => {
+            console.error("Error creating user:", error);
+            res.status(500).json({ error: "Internal server error" });
+        });
+});
 
 app.get("/FindUser/:id", (req, res) => {
     const id = req.params.id;
